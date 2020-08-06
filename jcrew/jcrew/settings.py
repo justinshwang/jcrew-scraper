@@ -1,4 +1,4 @@
-# Scrapy settings for jcrewsitedata project
+# Scrapy settings for jcrew project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'jcrewsitedata'
+BOT_NAME = 'jcrew'
 
-SPIDER_MODULES = ['jcrewsitedata.spiders']
-NEWSPIDER_MODULE = 'jcrewsitedata.spiders'
+SPIDER_MODULES = ['jcrew.spiders']
+NEWSPIDER_MODULE = 'jcrew.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'jcrewsitedata (+http://www.yourdomain.com)'
+#USER_AGENT = 'jcrew (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -45,13 +45,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'jcrewsitedata.middlewares.JcrewsitedataSpiderMiddleware': 543,
+#    'jcrew.middlewares.JcrewSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'jcrewsitedata.middlewares.JcrewsitedataDownloaderMiddleware': 543,
+#    'jcrew.middlewares.JcrewDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -63,7 +63,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'jcrewsitedata.pipelines.JcrewsitedataPipeline': 300,
+#    'jcrew.pipelines.JcrewPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -86,3 +86,8 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Provide results to stdout for NiFi
+FEED_FORMAT = 'jsonlines'
+FEED_URI = 'stdout:'
+LOG_LEVEL = 'ERROR'
