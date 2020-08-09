@@ -11,7 +11,7 @@ pip install -r requirements.txt
 # TODO List
 
 1. Scraper
-    a. Detect when first four sale items when sorted by "newest to sale" change
+    a. Detect when first four sale items when sorted by "newest to sale" change. Possibly add all new to sale items to db or store
     b. For now, store item html data to MongoDB (?) or just html file
 2. Nifi Setup
     a. Connect any additional processers, basic setup with scraper added to each node
