@@ -5,7 +5,7 @@ class JcrewSale(scrapy.Spider):
     name = "jcrewsale"
     
     def start_requests(self):
-        start_urls = [ 'https://www.jcrew.com/r/sale/men' ] 
+        start_urls = [ 'https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=yes' ] 
         for url in start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
