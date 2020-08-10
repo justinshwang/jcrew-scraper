@@ -1,5 +1,6 @@
 import scrapy
 import re
+import json
 
 class NewSale(scrapy.Spider):
     # Determine if sale page has changed by looking at first 5 items
@@ -17,6 +18,7 @@ class NewSale(scrapy.Spider):
         count = 0
         num_items = 5
 
+        all_items_dict = {"prices":[]}
         for item in items:
             if count > num_items:
                 break
@@ -29,7 +31,23 @@ class NewSale(scrapy.Spider):
             }
             count += 1         
 
-        # filename = 'sales.html'
-        # with open('jcrew/pages/' + filename, 'wb') as f:
-        #     f.write(response.body)
-        # self.log('Saved file %s' % filename)
+            all_items_dict["prices"].append(item_formatted)
+
+        filename = "newsales.json"
+        page_path = "jcrew/pages/"
+        try:
+            # Sales data exists, check for changes
+            with open(page_path + filename) as f:
+                prev_sale_data = json.load(f)
+            if prev_sale_data == all_items_dict:
+                print("It's the same!!")
+            else:
+                print("New sales page!")
+                with open(page_path + filename, 'w') as json_file:
+                    json.dump(all_items_dict, json_file, ensure_ascii=False, indent=4)
+        except:
+            print("New sales page!")
+            with open(page_path + filename, 'w') as json_file:
+                json.dump(all_items_dict, json_file, ensure_ascii=False, indent=4)
+
+        self.log('Saved file %s' % filename)

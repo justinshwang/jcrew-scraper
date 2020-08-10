@@ -8,6 +8,13 @@ Install required libraries
 pip install -r requirements.txt
 ```
 
+## Directions
+1. cd into directory of spiders
+2. Run the following command
+```
+scrapy crawl <name-of-spider>
+```
+
 # TODO List
 
 1. Scraper
