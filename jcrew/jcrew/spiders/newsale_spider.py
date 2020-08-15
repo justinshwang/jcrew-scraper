@@ -51,7 +51,7 @@ class NewSale(scrapy.Spider):
         # Check for sales data, compare for updates to page
 
         filename = "newsales.json"
-        page_path = "jcrew/pages/"
+        page_path = "jcrew/updates/"
         try:
             with open(page_path + filename) as f:
                 prev_sale_data = json.load(f)
