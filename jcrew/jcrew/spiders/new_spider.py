@@ -5,7 +5,7 @@ import json
 class NewSale(scrapy.Spider):
     # Determine if sale page has changed by looking at first 5 items
 
-    name = "newsale"
+    name = "new"
     
     def start_requests(self):
         start_urls = [ 'https://www.jcrew.com/r/sale/men' ] 
@@ -20,8 +20,8 @@ class NewSale(scrapy.Spider):
 
         count = 0
         num_items = 5
-
         all_items_dict = {"prices":[]}
+
         for item in items:
             if count > num_items:
                 break
