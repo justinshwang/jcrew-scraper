@@ -1,9 +1,10 @@
 import scrapy
 import re
 
-class RecSale(scrapy.Spider):
-    # Recommend top 25 sale items of interest
-    name = "recsale"
+class FilterSale(scrapy.Spider):
+    # Display items given filter or label i.e. "new to sale"
+
+    name = "filtersale"
     
     def start_requests(self):
         start_urls = [ 'https://www.jcrew.com/r/sale/men' ] 
@@ -12,7 +13,6 @@ class RecSale(scrapy.Spider):
 
     def parse(self, response):
         # TODO: Update selectors with xpath, select item identifying details/price
-        # TODO: Check stored data (json?) for price drops
 
         PRICE_SELECTOR = '.is-price'
         items = response.css(PRICE_SELECTOR)
