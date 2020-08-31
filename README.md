@@ -15,7 +15,7 @@ pip install -r requirements.txt
 scrapy crawl <name-of-spider>
 ```
 
-## Nifi (Dev-Ops Branch)
+## Nifi (ops Branch)
     Cluster Manager - Port 11000
     node1 - Port 11001
     node1 - Port 11002
