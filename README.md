@@ -1,5 +1,5 @@
 # scraper
-Web scraper using Python Scrapy Library and argparse for parser
+Web scraper using Python Scrapy Library and argparse for parser. 
 
 ## Setup
 
@@ -25,3 +25,9 @@ scrapy crawl <name-of-spider>
     Cluster Manager - Port 11000
     node1 - Port 11001
     node1 - Port 11002
+
+
+# Development
+1. Add a new spider
+    a. Add SPIDERNAME.py file in amazon/amazon/spiders/ directory
+    b. Add script to scripts/ directory 

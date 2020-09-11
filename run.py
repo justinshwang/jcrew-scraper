@@ -8,9 +8,9 @@ import sys
 def main():
     # parser selects user input 
 
-    # TODO: using jcrew for testing
-    path = os.path.realpath("jcrew/jcrew/spiders")
-    spiders = [spider for spider in os.listdir(path) if spider != "__init__"]
+    # TODO: using jcrew for testing argparse, adjust to amazon
+    path = os.path.realpath("scripts")
+    actions = [action for action in os.listdir(path)]
     # Implement helper/formatter function override that matches spider to description or usage
 
     parser_main = argparse.ArgumentParser(description="usage: [-h] <function> [arg_a] [arg_b] ...")
