@@ -1,5 +1,5 @@
-# jcrew-scraper
-Web Scraper using Scrapy
+# scraper
+Web scraper using Python Scrapy Library and argparse for parser
 
 ## Setup
 
