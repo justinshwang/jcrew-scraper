@@ -8,7 +8,8 @@ import sys
 def main():
     # parser selects user input 
 
-    path = os.path.realpath("amazon/amazon/spiders")
+    # TODO: using jcrew for testing
+    path = os.path.realpath("jcrew/jcrew/spiders")
     spiders = [spider for spider in os.listdir(path) if spider != "__init__"]
     # Implement helper/formatter function override that matches spider to description or usage
 

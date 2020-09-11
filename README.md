@@ -8,6 +8,12 @@ Install required libraries
 pip install -r requirements.txt
 ```
 
+## Run program
+1. Run the run.py file with arguments or -h flag for help
+```
+python run.py <arg_one> <arg_two>
+```
+
 ## Run a Spider
 1. cd into directory of spiders
 2. Run the following command
