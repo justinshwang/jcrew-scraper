@@ -1,6 +1,6 @@
 #!/bin/bash
 # Filename: newsale.sh
-# Description: 
+# Description: test file for jcrew
 
 usage() { echo -n "Usage: <action> [-h]" 1>&2; exit 1; }
 
