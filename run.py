@@ -6,7 +6,7 @@ import sys
 
 from subprocess import Popen
 
-from modules import options
+from modules import OverrideFormatter
 
 def main():
     # parser selects user input 
@@ -15,8 +15,8 @@ def main():
     actions = [action for action in os.listdir(path)]
     # Implement helper/formatter function override that matches spider to description or usage
 
-    parser_main = argparse.ArgumentParser(add_help=False, description="full usage: [-h] <action> [item_name] [size] ...")
-    parser_subs = parser_main.add_subparsers(metavar="action", dest="action", help = options.SmartFormatter.list_category_options(actions, "Possible scripts: "))
+    parser_main = argparse.ArgumentParser(add_help=False, description="full usage: [-h] <action> [item_name] [size] ...", formatter_class=OverrideFormatter.SmartFormatter)
+    parser_subs = parser_main.add_subparsers(metavar="action", dest="action", help=OverrideFormatter.SmartFormatter.list_actions(actions, "possible options"))
     all_parser_subs = {}
     for action in actions:
         all_parser_subs[action] = parser_subs.add_parser(action, add_help=False)
