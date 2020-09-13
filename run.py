@@ -30,6 +30,7 @@ def main():
 
     path = os.path.realpath("scripts/" + known_args.action + ".sh")
     args = [arg for arg in [path, known_args.arg_one, known_args.arg_two] + unknown_args if arg != "None"]
+    print("HERE", args)
     call_script(args)
 
 
@@ -55,5 +56,5 @@ def call_script(args):
     pass
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
