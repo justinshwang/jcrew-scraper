@@ -17,7 +17,13 @@ class FilterSpider(scrapy.Spider):
         products = response.xpath(STATUS_SELECTOR).getall()
         
         for product in products:
-            print(product)
+            link = 'amazon.com' + product
+            print(link)
+            
+            colors = link.xpath('//li[starts-with(@id, "color_name_")]').getall()
+            for color in colors:
+                print(color)
+            
         '''
         page = response.url.split("/")[-2]
         filename = 'quotes-%s.html' % page
