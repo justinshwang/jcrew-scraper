@@ -6,6 +6,7 @@ import sys
 
 from subprocess import Popen
 
+from modules import OverrideFormatter
 
 def main():
     # parser selects user input 
@@ -14,11 +15,11 @@ def main():
     actions = [action for action in os.listdir(path)]
     # Implement helper/formatter function override that matches spider to description or usage
 
-    parser_main = argparse.ArgumentParser(description="usage: [-h] <action> [arg_a] [arg_b] ...")
-    parser_subs = parser_main.add_subparsers(metavar="action", dest="action")
+    parser_main = argparse.ArgumentParser(add_help=False, description="full usage: [-h] <action> [item_name] [size] ...", formatter_class=OverrideFormatter.SmartFormatter)
+    parser_subs = parser_main.add_subparsers(metavar="action", dest="action", help=OverrideFormatter.SmartFormatter.list_actions(actions, "possible options"))
     all_parser_subs = {}
     for action in actions:
-        all_parser_subs[action] = parser_subs.add_parser(action)
+        all_parser_subs[action] = parser_subs.add_parser(action, add_help=False)
     for action in all_parser_subs:
         # Up to two additional params
         all_parser_subs[action].add_argument("arg_one", type=str, default="None", nargs='?')
@@ -30,19 +31,19 @@ def main():
 
     path = os.path.realpath("scripts/" + known_args.action + ".sh")
     args = [arg for arg in [path, known_args.arg_one, known_args.arg_two] + unknown_args if arg != "None"]
+    print("HERE", args)
     call_script(args)
 
 
 def check_help_flags(parser_main, all_parser_subs):
     # Override -h flag argparse default implementation at specific points
 
-    if (sys.argv[1] == '-h' or len(sys.argv) < 2):
+    if (len(sys.argv) < 2 or sys.argv[1] == '-h'):
         parser_main.print_help()
         sys.exit(1)
     if (sys.argv[2] == '-h'):
         all_parser_subs[sys.argv[1]].print_help()
         sys.exit(1)
-    pass
     
     
 def call_script(args):
@@ -55,5 +56,5 @@ def call_script(args):
     pass
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
