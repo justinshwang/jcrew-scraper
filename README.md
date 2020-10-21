@@ -29,5 +29,5 @@ scrapy crawl <name-of-spider>
 
 # Development
 1. Add a new spider
-    a. Add SPIDERNAME.py file in amazon/amazon/spiders/ directory
+    a. Add SPIDERNAME.py file in jcrew/jcrew/spiders/ directory
     b. Add script to scripts/ directory 
