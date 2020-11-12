@@ -1,37 +1,40 @@
-import argparse
-
 import os
 from os import walk
 import sys
 
-from subprocess import Popen
+import subprocess
 
+import argparse
 from modules import OverrideFormatter
 
 def main():
-    # parser selects user input 
+    spider_name = "new"
+    crawler_loc = "jcrew"
+    args = (["scrapy", "crawl", spider_name], crawler_loc)
+    
+    # # parser will selects user input 
 
-    path = os.path.realpath("scripts")
-    actions = [action for action in os.listdir(path)]
-    # Implement helper/formatter function override that matches spider to description or usage
+    # path = os.path.realpath("scripts")
+    # actions = [action for action in os.listdir(path)]
+    # # Implement helper/formatter function override that matches spider to description or usage
 
-    parser_main = argparse.ArgumentParser(add_help=False, description="full usage: [-h] <action> [item_name] [size] ...", formatter_class=OverrideFormatter.SmartFormatter)
-    parser_subs = parser_main.add_subparsers(metavar="action", dest="action", help=OverrideFormatter.SmartFormatter.list_actions(actions, "possible options"))
-    all_parser_subs = {}
-    for action in actions:
-        all_parser_subs[action] = parser_subs.add_parser(action, add_help=False)
-    for action in all_parser_subs:
-        # Up to two additional params
-        all_parser_subs[action].add_argument("arg_one", type=str, default="None", nargs='?')
-        all_parser_subs[action].add_argument("arg_two", type=str, default="None", nargs='?')
+    # parser_main = argparse.ArgumentParser(add_help=False, description="full usage: [-h] <action> [item_name] [size] ...", formatter_class=OverrideFormatter.SmartFormatter)
+    # parser_subs = parser_main.add_subparsers(metavar="action", dest="action", help=OverrideFormatter.SmartFormatter.list_actions(actions, "possible options"))
+    # all_parser_subs = {}
+    # for action in actions:
+    #     all_parser_subs[action] = parser_subs.add_parser(action, add_help=False)
+    # for action in all_parser_subs:
+    #     # Up to two additional params
+    #     all_parser_subs[action].add_argument("arg_one", type=str, default="None", nargs='?')
+    #     all_parser_subs[action].add_argument("arg_two", type=str, default="None", nargs='?')
 
-    check_help_flags(parser_main, all_parser_subs)
-    known_args, unknown_args = parser_main.parse_known_args()
-    # print(unknown_args)
+    # check_help_flags(parser_main, all_parser_subs)
+    # known_args, unknown_args = parser_main.parse_known_args()
+    # # print(unknown_args)
 
-    path = os.path.realpath("scripts/" + known_args.action + ".sh")
-    args = [arg for arg in [path, known_args.arg_one, known_args.arg_two] + unknown_args if arg != "None"]
-    print("HERE", args)
+    # path = os.path.realpath("scripts/" + known_args.action + ".sh")
+    # args = [arg for arg in [path, known_args.arg_one, known_args.arg_two] + unknown_args if arg != "None"]
+    
     call_script(args)
 
 
@@ -47,10 +50,14 @@ def check_help_flags(parser_main, all_parser_subs):
     
     
 def call_script(args):
-    # calls proper scripts passing arguments
+    # calls proper scripts passing arguments for argparse
+    # TODO: Implement argparse options
 
-    Process=Popen(args, shell=True)
-    print("Process exit status: " + Process)
+    cmds, crawler_loc = args
+    process = subprocess.Popen(cmds, cwd=crawler_loc, stdin=sys.stdin, stderr=subprocess.PIPE, shell=True)
+    
+    output, err = process.communicate()
+    print(output)
 
     # Handle errors/exit codes
     pass

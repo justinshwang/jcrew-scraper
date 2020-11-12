@@ -1,5 +1,5 @@
 # scraper
-Web scraper using Python Scrapy Library and argparse for parser. Utilizing argparse for CLI.
+Web scraper using Python Scrapy Library. Uses cron to run scheduled script on linux machine.
 
 ## Setup
 
@@ -9,19 +9,10 @@ pip install -r requirements.txt
 ```
 
 
-Run the playbook playbook_ansible.yml. This one will get all the roles and put them in roles/ sub-directory 
-```
-ansible-playbook -i hosts playbook_ansible.yml
-```
-Run the actual playbook playbook_scrapy.yml in order to provision the server.
-```
-ansible-playbook -i hosts playbook_scrapy.yml
-```
-
 ## Run program
-1. Run the parser.py file with arguments or -h flag for help
+1. Run the run.py file. Run cron to schedule this periodically
 ```
-python parser.py <function_name> [arg_one] [arg_two] [-h]
+python library/run.py
 ```
 
 # Development
@@ -42,8 +33,12 @@ scrapy crawl <name-of-spider>
     node1 - Port 11001
     node1 - Port 11002
 
-
-# Development
-1. Add a new spider
-    a. Add SPIDERNAME.py file in jcrew/jcrew/spiders/ directory
-    b. Add script to scripts/ directory 
+## Ansible
+    Run the playbook playbook_ansible.yml. This one will get all the roles and put them in roles/ sub-directory 
+    ```
+    ansible-playbook -i hosts playbook_ansible.yml
+    ```
+    Run the actual playbook playbook_scrapy.yml in order to provision the server.
+    ```
+    ansible-playbook -i hosts playbook_scrapy.yml
+    ```

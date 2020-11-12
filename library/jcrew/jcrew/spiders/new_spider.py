@@ -8,7 +8,7 @@ class NewSale(scrapy.Spider):
     name = "new"
     
     def start_requests(self):
-        start_urls = [ 'https://www.jcrew.com/r/sale/men' ] 
+        start_urls = [ 'https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no' ] 
         for url in start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
@@ -29,9 +29,10 @@ class NewSale(scrapy.Spider):
             item_formatted = item.css(SPAN_SELECTOR).get()
             # Chooses first price if range given
             item_formatted = item_formatted.split("–")[0]
-            yield {
-                'price': item_formatted
-            }
+            # Print json outputted
+            # yield {
+            #     'price': item_formatted
+            # }
             count += 1         
 
             all_items_dict["prices"].append(item_formatted)
@@ -49,7 +50,6 @@ class NewSale(scrapy.Spider):
     @staticmethod
     def check_data(self, all_items):
         # Check for sales data, compare for updates to page
-
         filename = "newsales.json"
         page_path = "jcrew/updates/"
         try:
