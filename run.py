@@ -62,7 +62,7 @@ def call_script(args):
     output, err = process.communicate()
     
     # Send email notification if page has been updated
-    if (output == b'No Changes.\r\n'):
+    if not (output == b'No Changes.\r\n'):
         msg = """\
             Page has been updated!
             https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no"""

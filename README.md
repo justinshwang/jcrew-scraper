@@ -3,23 +3,33 @@ Web scraper using Python Scrapy Library. Uses cron to run scheduled script on li
 
 ## Setup
 
-Install required libraries
+1. Windows
 ```
-pip install -r requirements.txt
+pip install Scrapy 
 ```
+2. Linux
+All dependencies installed running setup.sh along with cron setup 
 
 
 ## Run program
-1. Run the run.py file. Run cron to schedule this periodically
+Schedule a Cron Job (Linux Only)
+1. Run setup.sh script. Modify hour and minute variable in script to schedule when spider will crawl in
 ```
-python library/run.py
+bash setup.sh
 ```
+This also installs necessary dependencies...
+
+Manually
+1. Run the run.py file to manually crawl spider(s)
+```
+python3 run.py
+```
+
 
 # Development
 1. Add a new spider
     a. Add SPIDERNAME.py file in jcrew/jcrew/spiders/ directory
     b. Add script to scripts/ directory 
-
 
 ## Run a Spider
 1. cd into directory of spiders
