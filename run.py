@@ -7,6 +7,10 @@ import subprocess
 import argparse
 from modules import OverrideFormatter
 
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 def main():
     spider_name = "new"
     crawler_loc = "jcrew"
@@ -54,13 +58,40 @@ def call_script(args):
     # TODO: Implement argparse options
 
     cmds, crawler_loc = args
-    process = subprocess.Popen(cmds, cwd=crawler_loc, stdin=sys.stdin, stderr=subprocess.PIPE, shell=True)
-    
+    process = subprocess.Popen(cmds, cwd=crawler_loc, stdout=subprocess.PIPE, shell=True)
     output, err = process.communicate()
-    print(output)
+    
+    # Send email notification if page has been updated
+    if (output == b'No Changes.\r\n'):
+        sendEmail("No Changes")
 
     # Handle errors/exit codes
     pass
+
+
+# Use built-in smtplib module to send notification
+def sendEmail(msg):
+    port = 465  # For SSL
+    sender_email = "J.W.CrewOfficial@gmail.com"
+    receiver_email = "justinw1@andrew.cmu.edu"
+    with open ("login.txt", "r") as myfile:
+        pswd=myfile.readlines()[0] # Retrieve password
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "J.Crew Page Update"
+    message["From"] = sender_email
+    message["To"] = receiver_email
+
+    # The email client will try to render the last part first
+    message.attach(MIMEText(msg, "plain"))
+
+    # Create a secure SSL context
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(sender_email, pswd)
+        server.sendmail(
+            sender_email, receiver_email, message.as_string()
+        )
 
 
 if __name__ == "__main__":
