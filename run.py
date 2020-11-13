@@ -63,14 +63,28 @@ def call_script(args):
     
     # Send email notification if page has been updated
     if (output == b'No Changes.\r\n'):
-        sendEmail("No Changes")
+        msg = """\
+            Page has been updated!
+            https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no"""
+
+        html = """\
+            <html>
+            <body>
+                <p>
+                Page has been Updated!<br>
+                <a href="https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no">Sale's Page</a> 
+                </p>
+            </body>
+            </html>
+            """
+        sendEmail(msg, html)
 
     # Handle errors/exit codes
     pass
 
 
 # Use built-in smtplib module to send notification
-def sendEmail(msg):
+def sendEmail(msg, html):
     port = 465  # For SSL
     sender_email = "J.W.CrewOfficial@gmail.com"
     receiver_email = "justinw1@andrew.cmu.edu"
@@ -83,7 +97,10 @@ def sendEmail(msg):
     message["To"] = receiver_email
 
     # The email client will try to render the last part first
-    message.attach(MIMEText(msg, "plain"))
+    msg_section = MIMEText(msg, "plain")
+    html_section = MIMEText(html, "html")
+    message.attach(msg_section)
+    message.attach(html_section)
 
     # Create a secure SSL context
     context = ssl.create_default_context()
