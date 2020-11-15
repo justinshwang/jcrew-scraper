@@ -13,7 +13,7 @@ All dependencies installed running setup.sh along with cron setup
 
 ## Run program
 Schedule a Cron Job (Linux Only)
-1. Run setup.sh script. Modify hour and minute variable in script to schedule when spider will crawl in
+1. Run setup.sh script. Modify HOUR, MINUTE, and PATH variables in script to schedule when spider appropriately
 ```
 bash setup.sh
 ```
@@ -28,8 +28,8 @@ python3 run.py
 
 # Development
 1. Add a new spider
-    a. Add SPIDERNAME.py file in jcrew/jcrew/spiders/ directory
-    b. Add script to scripts/ directory 
+- Add SPIDERNAME.py file in jcrew/jcrew/spiders/ directory
+- Add script to setup.sh to run as cron job
 
 ## Run a Spider
 1. cd into directory of spiders
@@ -38,7 +38,7 @@ python3 run.py
 scrapy crawl <name-of-spider>
 ```
 
-## Nifi (Dev-Ops Branch Only)
+## Nifi (ops Branch Only)
     Cluster Manager - Port 11000
     node1 - Port 11001
     node1 - Port 11002
