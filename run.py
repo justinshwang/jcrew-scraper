@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 from os import walk
 import sys
@@ -57,12 +59,14 @@ def call_script(args):
     # calls proper scripts passing arguments for argparse
     # TODO: Implement argparse options
 
+    # Call command to crawl spider with Popen
     cmds, crawler_loc = args
-    process = subprocess.Popen(cmds, cwd=crawler_loc, stdout=subprocess.PIPE, shell=True)
+    process = subprocess.Popen(cmds, cwd=crawler_loc, stdout=subprocess.PIPE)
     output, err = process.communicate()
     
     # Send email notification if page has been updated
-    if not (output == b'No Changes.\r\n'):
+    # TODO: On Windows, must add "\r" in front of "\n"
+    if not (output == b'No Changes.\n'):
         msg = """\
             Page has been updated!
             https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no"""
@@ -90,7 +94,7 @@ def sendEmail(msg, html):
     receiver_email = "justinw1@andrew.cmu.edu"
     with open ("login.txt", "r") as myfile:
         pswd=myfile.readlines()[0] # Retrieve password
-
+    
     message = MIMEMultipart("alternative")
     message["Subject"] = "J.Crew Page Update"
     message["From"] = sender_email
