@@ -1,4 +1,4 @@
-/jcrew/jcrew/pages
+/jcrew/jcrew/pages/*.html
 
 __init__.py
 login.txt
