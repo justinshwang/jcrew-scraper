@@ -66,23 +66,30 @@ def call_script(args):
     
     # Send email notification if page has been updated
     # TODO: On Windows, must add "\r" in front of "\n"
-    print(output)
+    parsed_output = output.split(b"#P")
     if not (output == b'No Changes.\n'):
-        msg = """\
-            Page has been updated!
-            https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no"""
+        try:
+            url = parsed_output[2].decode("utf-8")[:-1]
+            page = parsed_output[1].decode("utf-8")[:-1]
 
-        html = """\
-            <html>
-            <body>
-                <p>
-                Page has been Updated!<br>
-                <a href="https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no">Sale's Page</a> 
-                </p>
-            </body>
-            </html>
-            """
-        sendEmail(msg, html)
+            msg = """\
+                New Updates!
+                """ + url
+
+            html = """\
+                <html>
+                <body>
+                    <p>
+                    New Updates!<br>
+                    <a href=""" + url + """>""" + page + """ Page</a> 
+                    </p>
+                </body>
+                </html>
+                """
+            sendEmail(msg, html)
+
+        except Exception as e:
+            print("ERROR:" + e)
 
     # Handle errors/exit codes
     pass

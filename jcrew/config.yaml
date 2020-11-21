@@ -1,4 +1,4 @@
 websites:
   url:
-    https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no:
+    https://www.jcrew.com/r/sale:
       page: "Mens Shoe Sales"
