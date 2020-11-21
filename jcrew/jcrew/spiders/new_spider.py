@@ -1,6 +1,18 @@
 import scrapy
 import re
 import json
+import yaml
+
+# Retrieve URLS
+START_URLS = dict()
+with open ("config.yaml", 'r') as stream:
+        config = yaml.safe_load(stream)
+questions = config['options']['graphs']
+# Defaults when running multiple graphs
+iteration_num = config['options']['iterationNum']
+cumulative = config['options']['graphCumulatively']
+team_num = config['options']['teamNum']
+
 
 class NewSale(scrapy.Spider):
     # Determine if sale page has changed by looking at first 5 items
@@ -8,8 +20,8 @@ class NewSale(scrapy.Spider):
     name = "new"
     
     def start_requests(self):
-        start_urls = [ 'https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no' ] 
-        for url in start_urls:
+        for url in START_URLS:
+            self.page_name = START_URLS[url]
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
@@ -50,7 +62,7 @@ class NewSale(scrapy.Spider):
     @staticmethod
     def check_data(self, all_items):
         # Check for sales data, compare for updates to page
-        filename = "newsales.json"
+        filename = self.page_name + ".json"
         page_path = "jcrew/updates/"
         try:
             with open(page_path + filename) as f:
@@ -58,7 +70,7 @@ class NewSale(scrapy.Spider):
             if prev_sale_data == all_items:
                 print("No Changes.")
             else:
-                print("Sales page has been updated recently.")
+                print(self.page_name)
                 with open(page_path + filename, 'w') as json_file:
                     json.dump(all_items, json_file, ensure_ascii=False, indent=4)
         except:

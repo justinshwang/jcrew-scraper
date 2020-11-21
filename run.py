@@ -66,6 +66,7 @@ def call_script(args):
     
     # Send email notification if page has been updated
     # TODO: On Windows, must add "\r" in front of "\n"
+    print(output)
     if not (output == b'No Changes.\n'):
         msg = """\
             Page has been updated!

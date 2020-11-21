@@ -1,0 +1,8 @@
+options:
+  graphs:
+    - A1
+    - A2
+    - A3
+  iterationNum: 5
+  graphCumulatively: true
+  teamNum: 2

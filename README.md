@@ -1,5 +1,5 @@
 # scraper
-Web scraper using Python Scrapy Library. Uses cron to run scheduled script on linux machine.
+Web scraper using Python Scrapy Library. Uses cron to run scheduled script.
 
 ## Setup
 
@@ -10,7 +10,7 @@ pip install Scrapy
 2. Linux
 All dependencies installed running setup.sh along with cron setup 
 
-
+3. Update config.yaml file in each scrapy project folder (i.e. /jcrew.config.yaml) to specify websites to scrape
 ## Run program
 Schedule a Cron Job (Linux Only)
 1. Run setup.sh script. Modify HOUR, MINUTE, and PATH variables in script to schedule when spider appropriately
