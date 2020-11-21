@@ -1,8 +1,4 @@
-options:
-  graphs:
-    - A1
-    - A2
-    - A3
-  iterationNum: 5
-  graphCumulatively: true
-  teamNum: 2
+websites:
+  url:
+    https://www.jcrew.com/r/sale/men/shoes_sneakers?crawl=no:
+      page: "Mens Shoe Sales"

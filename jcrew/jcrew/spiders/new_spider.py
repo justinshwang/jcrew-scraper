@@ -6,22 +6,16 @@ import yaml
 # Retrieve URLS
 START_URLS = dict()
 with open ("config.yaml", 'r') as stream:
-        config = yaml.safe_load(stream)
-questions = config['options']['graphs']
-# Defaults when running multiple graphs
-iteration_num = config['options']['iterationNum']
-cumulative = config['options']['graphCumulatively']
-team_num = config['options']['teamNum']
-
+    config = yaml.safe_load(stream)
+for url in config["websites"]["url"]:
+    START_URLS[url] = config["websites"]["url"][url]["page"]
 
 class NewSale(scrapy.Spider):
     # Determine if sale page has changed by looking at first 5 items
-
     name = "new"
-    
+
     def start_requests(self):
         for url in START_URLS:
-            self.page_name = START_URLS[url]
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
@@ -49,7 +43,8 @@ class NewSale(scrapy.Spider):
 
             all_items_dict["prices"].append(item_formatted)
 
-        self.check_data(self, all_items_dict)
+        page_name = START_URLS[url]
+        self.check_data(self, page_name, all_items_dict)
 
     # def build_datadoc (self, row, name, price):
     #     tablerows = response.xpath("//*[@id='results']/tr")
@@ -60,9 +55,9 @@ class NewSale(scrapy.Spider):
     #     }
 
     @staticmethod
-    def check_data(self, all_items):
+    def check_data(self, page_name, all_items):
         # Check for sales data, compare for updates to page
-        filename = self.page_name + ".json"
+        filename = page_name.lower().replace(" ", "_") + ".json"
         page_path = "jcrew/updates/"
         try:
             with open(page_path + filename) as f:
@@ -70,11 +65,12 @@ class NewSale(scrapy.Spider):
             if prev_sale_data == all_items:
                 print("No Changes.")
             else:
-                print(self.page_name)
+                # Send page name to stdout and used in email notification
+                print(page_name)
                 with open(page_path + filename, 'w') as json_file:
                     json.dump(all_items, json_file, ensure_ascii=False, indent=4)
         except:
-            print("Sales page has been updated recently.")
+            print(page_name)
             with open(page_path + filename, 'w') as json_file:
                 json.dump(all_items, json_file, ensure_ascii=False, indent=4)
 
