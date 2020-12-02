@@ -54,7 +54,6 @@ def check_help_flags(parser_main, all_parser_subs):
         all_parser_subs[sys.argv[1]].print_help()
         sys.exit(1)
     
-    
 def call_script(args):
     # calls proper scripts passing arguments for argparse
     # TODO: Implement argparse options
@@ -63,7 +62,6 @@ def call_script(args):
     cmds, crawler_loc = args
     process = subprocess.Popen(cmds, cwd=crawler_loc, stdout=subprocess.PIPE)
     output, err = process.communicate()
-    
     # Send email notification if page has been updated
     # TODO: On Windows, must add "\r" in front of "\n"
     parsed_output = output.split(b"#P")
@@ -89,7 +87,9 @@ def call_script(args):
             sendEmail(msg, html)
 
         except Exception as e:
-            print("ERROR:" + e)
+            print("Error: ", e)
+            print("Suggestion: Try checking if output was parsed properly per machine (Linux vs. Windows)")
+
 
     # Handle errors/exit codes
     pass

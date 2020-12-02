@@ -24,13 +24,13 @@ class NewSale(scrapy.Spider):
         PRICE_SELECTOR = '.is-price'
         items = response.css(PRICE_SELECTOR)
 
-        count = 0
-        num_items = 5
+        num_items = 10
         all_items_dict = {"prices":[]}
 
         for item in items:
-            if count > num_items:
+            if num_items == 0:
                 break
+  
             SPAN_SELECTOR = 'span ::text'
             item_formatted = item.css(SPAN_SELECTOR).get()
             # Chooses first price if range given
@@ -39,7 +39,7 @@ class NewSale(scrapy.Spider):
             # yield {
             #     'price': item_formatted
             # }
-            count += 1         
+            num_items -= 1      
 
             all_items_dict["prices"].append(item_formatted)
 
@@ -55,7 +55,15 @@ class NewSale(scrapy.Spider):
         try:
             with open(page_path + filename) as f:
                 prev_sale_data = json.load(f)
-            if prev_sale_data == all_items:
+
+            # Compare current page html with past stored version
+            num_prev_items = len(prev_sale_data['prices'])
+            num_new_items = len(all_items['prices'])
+            if prev_sale_data == all_items or num_new_items <= num_prev_items:
+                if num_new_items <= num_prev_items:
+                    # Update html with fewer items 
+                    with open(page_path + filename, 'w') as json_file:
+                        json.dump(all_items, json_file, ensure_ascii=False, indent=4)
                 print("No Changes.")
             else:
                 # Send page name to stdout and used in email notification
